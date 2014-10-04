@@ -292,6 +292,7 @@ public class Move {
 		return container;
 	}
 	
+	//method for horse moves
 	public static String horseLMove(int[] a, Chessboard.Chessmen[][] chessboard) {
 		String color_of_piece_to_move = Validation.checkColor(a[0], a[1], chessboard);
 		String initialString = "";
@@ -316,6 +317,7 @@ public class Move {
 		return container;
 	}
 	
+	//method used in horseLMove
 	public static String shapeChecker(int a, int b) {
 		String c="";
 		if (a<0 || a>7) {
@@ -327,6 +329,7 @@ public class Move {
 		c += b;
 		return c;
 	}
-	
-}
+		
+	}
+
 	

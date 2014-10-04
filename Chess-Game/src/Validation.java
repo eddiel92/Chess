@@ -1,13 +1,24 @@
 import java.util.Scanner;
 
+
 public class Validation {
 	//asks for string checks if input string is valid and if not reasks for input, if input is valid it returns the string
 	public static String stringChecker() {
+		System.out.println("Enter a move i.e. 'e7 to e5'");
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		String choose = sc.nextLine();
+		String[] split;
+		for(;;) {
+			if (choose.length()<8) {
 			System.out.println("Enter a move i.e. 'e7 to e5'");
-			@SuppressWarnings("resource")
-			Scanner sc = new Scanner(System.in);
-			String choose = sc.nextLine();
-			String[] split = choose.split("\\s+");
+			choose = sc.nextLine();
+			}
+			else {
+				break;
+			}
+		}
+		split = choose.split("\\s+");
 			for(;;) {
 				 if ((split[0].startsWith("a") ||
 						 split[0].startsWith("b") ||
@@ -198,27 +209,65 @@ public class Validation {
 	}
 	
 	//check color method returns the color of a piece given its coordinate position on the board
-		public static String checkColor(int x_pos, int y_pos, Chessboard.Chessmen[][] chessboard) {
-			Chessboard.Chessmen piece_to_move=chessboard[x_pos][y_pos];
-			String color;
-			if (piece_to_move==Chessboard.Chessmen.WHITE_ROOK ||
-					piece_to_move==Chessboard.Chessmen.WHITE_QUEEN ||
-					piece_to_move==Chessboard.Chessmen.WHITE_KING ||
-					piece_to_move==Chessboard.Chessmen.WHITE_BISHOP ||
-					piece_to_move==Chessboard.Chessmen.WHITE_PAWN ||
-					piece_to_move==Chessboard.Chessmen.WHITE_KNIGHT) {
-				 color = "WHITE";
-			} 
-			else if (piece_to_move==Chessboard.Chessmen.BLACK_ROOK ||
-					piece_to_move==Chessboard.Chessmen.BLACK_QUEEN ||
-					piece_to_move==Chessboard.Chessmen.BLACK_KING ||
-					piece_to_move==Chessboard.Chessmen.BLACK_BISHOP ||
-					piece_to_move==Chessboard.Chessmen.BLACK_PAWN ||
-					piece_to_move==Chessboard.Chessmen.BLACK_KNIGHT)  {
-				color = "BLACK";
-			} else {
-				color = "NONE";
-			}
-			return color;
+	public static String checkColor(int x_pos, int y_pos, Chessboard.Chessmen[][] chessboard) {
+		Chessboard.Chessmen piece_to_move=chessboard[x_pos][y_pos];
+		String color;
+		if (piece_to_move==Chessboard.Chessmen.WHITE_ROOK ||
+				piece_to_move==Chessboard.Chessmen.WHITE_QUEEN ||
+				piece_to_move==Chessboard.Chessmen.WHITE_KING ||
+				piece_to_move==Chessboard.Chessmen.WHITE_BISHOP ||
+				piece_to_move==Chessboard.Chessmen.WHITE_PAWN ||
+				piece_to_move==Chessboard.Chessmen.WHITE_KNIGHT) {
+			 color = "WHITE";
+		} 
+		else if (piece_to_move==Chessboard.Chessmen.BLACK_ROOK ||
+				piece_to_move==Chessboard.Chessmen.BLACK_QUEEN ||
+				piece_to_move==Chessboard.Chessmen.BLACK_KING ||
+				piece_to_move==Chessboard.Chessmen.BLACK_BISHOP ||
+				piece_to_move==Chessboard.Chessmen.BLACK_PAWN ||
+				piece_to_move==Chessboard.Chessmen.BLACK_KNIGHT)  {
+			color = "BLACK";
+		} else {
+			color = "NONE";
 		}
+		return color;
+	}
+
+	//receives board and a Boolean array encoding whether or not the rooks and kings have been moved and returns the same boolean array
+	public static boolean[][] castleChecker(boolean[][] castle_array, Chessboard.Chessmen[][] chessboard) {
+		if (castle_array[0][0] == true) {
+			if(chessboard[0][7] != Chessboard.Chessmen.BLACK_ROOK) {
+				castle_array[0][0] = false;
+			}
+		}
+		if (castle_array[0][1] == true) {
+			if(chessboard[4][7] != Chessboard.Chessmen.BLACK_KING) {
+				castle_array[0][1] = false;
+			}
+		}
+		if (castle_array[0][2] == true) {
+			if(chessboard[7][7] != Chessboard.Chessmen.BLACK_ROOK) {
+				castle_array[0][2] = false;
+			}
+		}
+		if (castle_array[1][0] == true) {
+			if(chessboard[0][0] != Chessboard.Chessmen.WHITE_ROOK) {
+				castle_array[1][0] = false;
+			}
+		}
+		if (castle_array[1][1] == true) {
+			if(chessboard[4][0] != Chessboard.Chessmen.WHITE_KING) {
+				castle_array[1][1] = false;
+			}
+		}
+		if (castle_array[1][2] == true) {
+			if(chessboard[7][0] != Chessboard.Chessmen.WHITE_ROOK) {
+				castle_array[1][2] = false;
+			}
+		}
+		
+		return castle_array;
+		
+	}
+	
 }
